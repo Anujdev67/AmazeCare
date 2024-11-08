@@ -9,3 +9,4 @@ import com.spring.AmazeCare.model.LabOperator;
 public interface LabOperatorRepository extends JpaRepository<LabOperator, Long> {
 }
 
+

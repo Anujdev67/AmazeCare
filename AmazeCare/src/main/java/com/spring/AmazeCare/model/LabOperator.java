@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -20,9 +21,13 @@ public class LabOperator {
     private String contact;
     private String email;
     private Date joinedOn;
-    @OneToOne
+    
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    // getters and setters
+
+
 
     public Long getId() {
 		return id;
