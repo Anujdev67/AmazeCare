@@ -42,15 +42,15 @@ public class AppointmentController {
 		try {
 			patientService.validate(patientId);
 		}catch(ResourceNotFoundException e) {
- 			 dto.setMsg(e.getMessage());
- 			 return ResponseEntity.badRequest().body(dto);
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
 		}
 		// Validate the doctor before persisting the appointment.
 		try {
 			doctorService.validate(docId);
 		}catch(ResourceNotFoundException e) {
 			dto.setMsg(e.getMessage());
- 			 return ResponseEntity.badRequest().body(dto);
+			return ResponseEntity.badRequest().body(dto);
 		}
 		// New appointments are always created in BOOKED state.
 		appointment.setStatus(Appointment_Status.BOOKED);

@@ -37,8 +37,8 @@ public class AppointmentService {
 	 * Fetches a single appointment by primary key.
 	 */
 	public Appointment getAppointment(int id) {
-		Optional<Appointment>optional=appointmentRepository.findById(id);
-		return optional.get();
+		Optional<Appointment> appointmentOptional = appointmentRepository.findById(id);
+		return appointmentOptional.get();
 	}
 
 }
