@@ -29,34 +29,47 @@ public class AppointmentController {
 	@Autowired
 	private PatientService patientService;
 	
+	/**
+	 * Books a new appointment after verifying both patient and doctor exist.
+	 * If any reference is invalid, a readable error message is sent to the client.
+	 */
 	@PostMapping("/appointment/book")
 	public ResponseEntity<?>bookAppointment(@RequestBody Appointment appointment,ResponseMessageDto dto){
 		int docId=appointment.getDoctor().getId();
 		int patientId=appointment.getPatient().getId();
 		
-		//Patient patient=null;
+		// Validate the patient first so we can fail early with a useful message.
 		try {
 			patientService.validate(patientId);
 		}catch(ResourceNotFoundException e) {
-			 dto.setMsg(e.getMessage());
-			 return ResponseEntity.badRequest().body(dto);
+			dto.setMsg(e.getMessage());
+			return ResponseEntity.badRequest().body(dto);
 		}
-		//Doctor doctor=null;
+		// Validate the doctor before persisting the appointment.
 		try {
 			doctorService.validate(docId);
 		}catch(ResourceNotFoundException e) {
 			dto.setMsg(e.getMessage());
-			 return ResponseEntity.badRequest().body(dto);
+			return ResponseEntity.badRequest().body(dto);
 		}
+		// New appointments are always created in BOOKED state.
 		appointment.setStatus(Appointment_Status.BOOKED);
 		appointment=appointmentService.addAppointment(appointment);
 		
 		return ResponseEntity.ok(appointment);	
 	}
+
+	/**
+	 * Lists every appointment record.
+	 */
 	@GetMapping("/appointment/allAppointment")
 	public List<Appointment> getAllAppointment(){
 		return appointmentService.getAllAppointment();
 	}
+
+	/**
+	 * Updates appointment workflow state using the status query parameter.
+	 */
 	@PutMapping("/appointment/update/{id}")
 	public Appointment updateAppointment(@RequestParam String status,@PathVariable int  id) {
 		Appointment appointment=null;
