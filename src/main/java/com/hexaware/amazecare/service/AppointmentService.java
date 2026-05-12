@@ -1,7 +1,6 @@
 package com.hexaware.amazecare.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,8 +36,8 @@ public class AppointmentService {
 	 * Fetches a single appointment by primary key.
 	 */
 	public Appointment getAppointment(int id) {
-		Optional<Appointment> appointmentOptional = appointmentRepository.findById(id);
-		return appointmentOptional.get();
+		return appointmentRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid Appointment Id Given"));
 	}
 
 }
