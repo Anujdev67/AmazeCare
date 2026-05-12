@@ -12,6 +12,7 @@ AmazeCare is a Spring Boot based hospital management backend.
 ```
 
 The application reads database and server settings from environment variables, with safe local defaults.
+If your local MySQL password is not `localdev`, set `DB_PASSWORD` before starting the app.
 
 ## Run with Docker (cloud-ready setup)
 
