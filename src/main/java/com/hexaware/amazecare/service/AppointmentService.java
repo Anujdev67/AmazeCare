@@ -37,7 +37,7 @@ public class AppointmentService {
 	 */
 	public Appointment getAppointment(int id) {
 		return appointmentRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid Appointment Id Given"));
+				.orElseThrow(() -> new IllegalArgumentException("Appointment not found with id: " + id));
 	}
 
 }
